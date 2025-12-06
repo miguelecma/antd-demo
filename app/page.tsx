@@ -1,9 +1,20 @@
+'use client';
+
 import Image from "next/image";
+import { FormEvent, useState } from "react";
 
 export default function Home() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Login attempt:", { email, password });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex min-h-screen w-1/2 flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -60,6 +71,68 @@ export default function Home() {
           </a>
         </div>
       </main>
+
+      <section className="flex w-1/2 items-center justify-center bg-zinc-100 px-16 dark:bg-zinc-900">
+        <div className="w-full max-w-sm">
+          <h2 className="mb-8 text-center text-2xl font-semibold text-black dark:text-zinc-50">
+            Login
+          </h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-medium text-black dark:text-zinc-300">
+                Email or Username
+              </label>
+              <input
+                id="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email or username"
+                className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-black placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder-zinc-400"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-medium text-black dark:text-zinc-300">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-black placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50 dark:placeholder-zinc-400"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="rounded-lg bg-blue-600 py-2 font-medium text-white transition-colors hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <div className="mt-6 flex flex-col gap-3 text-center text-sm">
+            <a
+              href="/recover"
+              className="text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Forgot your password?
+            </a>
+            <div className="text-zinc-600 dark:text-zinc-400">
+              Don't have an account?{" "}
+              <a
+                href="/register"
+                className="font-medium text-blue-600 transition-colors hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                Register here
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
